@@ -116,3 +116,11 @@ static char *boolToString(bool b)
         sprintf(s, "%d", b);
     return s;
 }
+
+int _assertTrueChain(bool b, _ASSERT_ARGS) {
+	_assert(b == true, CF_ASSERTIONS_CONTEXT, " call to function returned false");
+}
+
+int _assertFalseChain(bool b, _ASSERT_ARGS) {
+	_assert(b == false, CF_ASSERTIONS_CONTEXT, " call to function returned true");
+}

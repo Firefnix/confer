@@ -39,6 +39,8 @@ int _assertByteNotEqual(unsigned char b1, unsigned char b2, _ASSERT_ARGS);
 int _assertStringEqual(const char *s1, const char *s2, _ASSERT_ARGS);
 int _assertStringNotEqual(const char *s1, const char *s2, _ASSERT_ARGS);
 
+int _assertTrueChain(bool b, _ASSERT_ARGS);
+int _assertFalseChain(bool b, _ASSERT_ARGS);
 
 #define assertTrue(b) _assertTrue(b, ASSERT_ARGS)
 #define assertFalse(b) _assertFalse(b, ASSERT_ARGS)
@@ -69,7 +71,7 @@ int _assertStringNotEqual(const char *s1, const char *s2, _ASSERT_ARGS);
 #define assertStringNotEqual(p1, p2) _assertStringNotEqual(p1, p2, ASSERT_ARGS)
 
 
-#define assertCustom(f, ...) assertTrue(f(__VA_ARGS__))
-#define assertCustomNot(f, ...) assertFalse(f(__VA_ARGS__))
+#define assertChain(f, ...) _assertTrueChain(f(__VA_ARGS__), ASSERT_ARGS)
+#define assertChainNot(f, ...) _assertFalseChain(f(__VA_ARGS__), ASSERT_ARGS)
 
 #endif
