@@ -173,3 +173,36 @@ int assertStringNotEqual(const char *s1, const char *s2);
 ```
 
 Test that `s1` and `s2` are not equal (passes if `strcmp(s1, s2) != 0`).
+
+## Special assertions
+
+### Chaining assertions
+
+Chaining assertions is used to pass parameters to an existing check function. Let's say you defined a `rational` typedef and a `is_zero` function that tells if a `rational` is zero, returning a `bool`. To test if a rational `x` is zero, we could obviously use both `assertTrue` and `is_zero`
+
+```c
+// Bad code
+assertTrue(is_zero(x));
+```
+
+This is a bad coding practice, because if the check fails we have no way to get back the value of x, and log it for example. Chained assertions were designed to solve this problem. To work with chained assertions we use two functions
+
+```c
+int assertChain(f, ...)
+int assertChainNot(f, ...)
+```
+
+They apply the arguments in `...` to the function `f` that returns a `bool`, providing more insights than the previous method if the test fails. The previous code would be replaced by
+
+```c
+assertChain(is_zero, x);
+```
+
+Chained assertions work with multiple arguments too, so checking if two `rational` numbers `x` and `y` are equal would be fairly simple using a `are_equal` function
+```c
+assertChain(are_equal, x, y);
+```
+
+### Custom assertions
+
+The great thing about chained assertions is that it enables us to define custom assertions. To learn more about custom assertions, go to the `Custom assertions` page.
