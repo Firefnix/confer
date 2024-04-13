@@ -1,5 +1,5 @@
 #ifndef CF_NODES_CHILDREN_H
-#   define CF_NODES_CHILDREN_H 1
+#define CF_NODES_CHILDREN_H 1
 
 #define CF_MAX_DEPTH 999
 
@@ -16,6 +16,5 @@ unsigned int countChildrenFailed(struct cfScope *scope);
 
 unsigned int countAssertionsPassed(struct cfScope *scope);
 unsigned int countAssertionsFailed(struct cfScope *scope);
-
 
 #endif

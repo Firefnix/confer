@@ -1,5 +1,5 @@
 #ifndef CF_SCOPES_ASSERT_H
-#   define CF_SCOPES_ASSERT_H 1
+#define CF_SCOPES_ASSERT_H 1
 #include <stdbool.h>
 #include "build.h"
 
@@ -69,7 +69,6 @@ int _assertFalseChain(bool b, _ASSERT_ARGS);
 
 #define assertStringEqual(s1, s2) _assertStringEqual(s1, s2, ASSERT_ARGS)
 #define assertStringNotEqual(p1, p2) _assertStringNotEqual(p1, p2, ASSERT_ARGS)
-
 
 #define assertChain(f, ...) _assertTrueChain(f(__VA_ARGS__), ASSERT_ARGS)
 #define assertChainNot(f, ...) _assertFalseChain(f(__VA_ARGS__), ASSERT_ARGS)

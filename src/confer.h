@@ -1,5 +1,5 @@
 #ifndef CONFER_H
-#    define CONFER_H
+#define CONFER_H
 
 #include "assertions.h"
 #include "build.h"
@@ -8,10 +8,10 @@
 #define cfInit initRootScope
 
 #define CFTEST struct cfScope *self
-#define cfTest(f) \
+#define cfTest(f)                   \
     static struct cfScope node_##f; \
-    initScope(node_##f); \
-    _cfAddChild(self, &node_##f); \
+    initScope(node_##f);            \
+    _cfAddChild(self, &node_##f);   \
     f(&node_##f)
 
 #endif

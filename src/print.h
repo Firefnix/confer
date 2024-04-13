@@ -1,5 +1,5 @@
 #ifndef NODES_PRINT_H
-#   define NODES_PRINT_H 1
+#define NODES_PRINT_H 1
 
 #include "build.h"
 
@@ -12,5 +12,6 @@ void printTree(struct cfScope *root);
 void printScope(struct cfScope *s, const int depth);
 int _cfPrintResults(struct cfScope *root);
 void _cfPrintAssertionFail(const char *file, const char *assertionType, const unsigned int line, const struct cfScope *scope);
+int cfReturnCode(struct cfScope *root);
 
 #endif
