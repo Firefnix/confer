@@ -9,6 +9,7 @@ Confer comes with a number of tools and feaures out of the box.
   -  20+ built-in assertions for most common types
   -  Custom assertions
   -  Fast build (the example compiles and runs in ~100 ms)
+  -  Lightning-fast runs (the example runs in 637 µs on a 7th-gen i5 processor !)
   -  Extra-light library written in C, no dynamic memory allocation (hence no memory leaks)
   -  A handy tool to manage projects and run tests (not compulsory)
 
