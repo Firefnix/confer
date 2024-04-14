@@ -35,7 +35,7 @@ void _cfPrintAssertionFail(const char *file, const char *assertionType, const un
     printf("%s%s:%u%s: in function %s: %s", bold, file, line, end, scope->name, assertionType + 1);
 }
 
-int cfReturnCode(struct cfScope *root)
+int _cfReturnCode(struct cfScope *root)
 {
     if (countAssertionsFailed(root) == 0)
     {
