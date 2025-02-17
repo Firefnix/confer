@@ -1,0 +1,38 @@
+name: Generate Doctype Docs
+
+permissions:
+  contents: write
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:  # Allows manual runs
+
+jobs:
+  generate-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Doctave
+        run: |
+          wget https://github.com/Doctave/doctave/releases/download/0.4.2/doctave-0.4.2-x86_64-unknown-linux-musl.tar.gz
+          tar -xzf doctave-0.4.2-x86_64-unknown-linux-musl.tar.gz
+          mv doctave-0.4.2-x86_64-unknown-linux-musl/doctave .
+          rmdir doctave-0.4.2-x86_64-unknown-linux-musl
+
+      - name: Generate Documentation
+        run: ./doctave build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
+          publish_branch: gh-pages
