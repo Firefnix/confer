@@ -1,0 +1,314 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Assertions</title>
+    <meta name="description" content="Documentation for Confer">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/assets/normalize.css?v=1739818200"
+        media="screen" />
+    <link rel="stylesheet" type="text/css" href="/assets/doctave-style.css?v=1739818200"
+        media="screen" />
+    <link rel="stylesheet" type="text/css" href="/assets/katex.css?v=1739818200" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/assets/prism-ghcolors.css?v=1739818200"
+        media="screen" />
+
+    <script>
+        var DOCTAVE_TIMESTAMP = "1739818200";
+        var BASE_PATH = "/";
+        var color = localStorage.getItem('doctave-color')
+
+        if (color === 'dark') {
+            document.getElementsByTagName('html')[0].classList.remove('light');
+            document.getElementsByTagName('html')[0].classList.add('dark');
+        } else {
+            document.getElementsByTagName('html')[0].classList.remove('dark');
+            document.getElementsByTagName('html')[0].classList.add('light');
+        }
+    </script>
+
+    
+</head>
+
+<body>
+    <label for='menu-toggle-switch' class='menu-toggle-button'>
+        ☰
+    </label>
+    <input type="checkbox" id="menu-toggle-switch" value='0' />
+    <div class='page'>
+        <div class='header'>
+            <div class='logo'>
+                
+                <a href="/">
+                    <img src="/assets/logo.svg" alt='Confer logo'></img>
+                </a>
+                
+                <h2 class='project-name'>
+                    <a href="/">
+                        Confer
+                    </a>
+                </h2>
+            </div>
+            <div class='search'>
+                <form id='search-form'>
+    <input type='text' id='search-box' autocomplete="off" placeholder="Search..."></input>
+    <span class='search-icon'>S</span>
+    <ul id='search-results'></ul>
+</form>
+
+            </div>
+            <div class='header-dummy-right'>
+            </div>
+        </div>
+        <div class='container'>
+            <div class='sidebar-left'>
+                <nav class='site-nav'>
+    <ul>
+        
+            <li><a class="active" href="/assertions">Assertions</a></li>
+            
+        
+            <li><a href="/command_line_tool">Command line tool (CF)</a></li>
+            
+        
+            <li><a href="/custom_assertions">Custom Assertions</a></li>
+            
+        
+            <li><a href="/example">Example</a></li>
+            
+        
+            <li><a href="/libraries">Libraries</a></li>
+            
+        
+    </ul>
+    <span id='light-dark-mode-switch'>
+        <svg xmlns="http://www.w3.org/2000/svg" id="dark-mode-icon" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+        </svg>
+
+        <svg xmlns="http://www.w3.org/2000/svg" id="light-mode-icon" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd" />
+        </svg>
+    </span>
+</nav>
+
+            </div>
+            <div class='doctave-content'>
+                <h1 id="assertions">Assertions</h1>
+<p>Confer comes with more than 20 built-in assertions. You can call them from any <code>CFTEST</code> or from your <code>main</code> function. Here is an example with <code>assertIntEqual</code>:</p>
+<pre><code class="language-c">void test_plus(CFTEST) {
+    assertIntEqual(2 + 3, 5);
+}
+</code></pre>
+<div class="callout info"><p class="callout-title">Calling subtests</p>
+<p>
+To run tests in <code>test_plus</code>, call it with <code>cfTest(test_plus);</code> from any <code>CFTEST</code> or from your <code>main</code> function.
+</p>
+</div>
+<p>Assertions return <code>true</code> if they pass, <code>false</code> if they fail. This return value can be used in conditions to make more tests:</p>
+<pre><code class="language-c">if (assertNotNull(my_car_pointer)) {
+    assertTrue(is_red(*my_car_pointer));
+}
+</code></pre>
+<p>This prevents errors like null dereferences or semgentation faults.</p>
+<h2 id="constants">Constants</h2>
+<pre><code class="language-c">#define ASSERTION_PASSED true
+#define ASSERTION_FAILED false
+</code></pre>
+<h2 id="built-in-assertions">Built-in assertions</h2>
+<h3 id="booleans">Booleans</h3>
+<pre><code class="language-c">int assertTrue(bool b);
+</code></pre>
+<pre><code class="language-c">int assertFalse(bool b);
+</code></pre>
+<p>Test that <code>b</code> is true (or false).</p>
+<h3 id="pointers">Pointers</h3>
+<pre><code class="language-c">int assertNull(void *p);
+</code></pre>
+<pre><code class="language-c">int assertNotNull(void *p);
+</code></pre>
+<p>Test that <code>p</code> is (or is not) <code>NULL</code>.</p>
+<pre><code class="language-c">int assertPointerEqual(const void *p1, const void *p2);
+</code></pre>
+<pre><code class="language-c">int assertPointerNotEqual(const void *p1, const void *p2);
+</code></pre>
+<p>Test that <code>p1</code> and <code>p2</code> are (or are not) equal.</p>
+<h3 id="integers">Integers</h3>
+<pre><code class="language-c">int assertZero(int x);
+</code></pre>
+<pre><code class="language-c">int assertNonZero(int x);
+</code></pre>
+<p>Test that <code>x</code> is (or is not) equal to <code>0</code>.</p>
+<pre><code class="language-c">int assertIntEqual(int x, int y);
+</code></pre>
+<pre><code class="language-c">int assertIntNotEqual(int x, int y);
+</code></pre>
+<p>Test that <code>x</code> and <code>y</code> are (or are not) equal.</p>
+<pre><code class="language-c">int assertIntGe(int x, int y);
+</code></pre>
+<p>Test that <code>x</code> is greater than or equal to <code>y</code> (passes if <code>x &gt;= y</code>).</p>
+<pre><code class="language-c">int assertIntLe(int x, int y);
+</code></pre>
+<p>Test that <code>x</code> is less than or equal to <code>y</code> (passes if <code>x &lt;= y</code>).</p>
+<pre><code class="language-c">int assertIntGreater(int x, int y);
+</code></pre>
+<p>Test that <code>x</code> is greater than <code>y</code> (passes if <code>x &gt; y</code>).</p>
+<pre><code class="language-c">int assertIntLess(int x, int y);
+</code></pre>
+<p>Test that <code>x</code> is less than <code>y</code> (passes if <code>x &lt; y</code>).</p>
+<pre><code class="language-c">int assertIntNonNegative(int x);
+</code></pre>
+<p>Test that <code>x</code> is non-negative; that is, greater than or equal to <code>0</code> (passes if <code>x &gt;= 0</code>).</p>
+<pre><code class="language-c">int assertIntNonPositive(int x);
+</code></pre>
+<p>Test that <code>x</code> is non-positive; that is, less than or equal to <code>0</code> (passes if <code>x &lt;= 0</code>).</p>
+<pre><code class="language-c">int assertIntPositive(int x);
+</code></pre>
+<p>Test that <code>x</code> is positive; that is, greater than <code>0</code> (passes if <code>x &gt; 0</code>).</p>
+<pre><code class="language-c">int assertIntNegative(int x);
+</code></pre>
+<p>Test that <code>x</code> is negative; that is, less than <code>0</code> (passes if <code>x &lt; 0</code>).</p>
+<h3 id="characters-&amp;-bytes">Characters &amp; bytes</h3>
+<pre><code class="language-c">int assertCharEqual(char c1, char c2);
+</code></pre>
+<pre><code class="language-c">int assertCharNotEqual(char c1, char c2);
+</code></pre>
+<p>Test that <code>c1</code> and <code>c2</code> are (or are not) equal.</p>
+<pre><code class="language-c">int assertByteEqual(unsigned char b1, unsigned char b2);
+</code></pre>
+<pre><code class="language-c">int assertByteNotEqual(unsigned char b1, unsigned char b2);
+</code></pre>
+<p>Test that <code>b1</code> and <code>b2</code> are (or are not) equal.</p>
+<h3 id="strings">Strings</h3>
+<pre><code class="language-c">int assertStringEqual(const char *s1, const char *s2);
+</code></pre>
+<p>Test that <code>s1</code> and <code>s2</code> are equal (passes if <code>strcmp(s1, s2) == 0</code>).</p>
+<pre><code class="language-c">int assertStringNotEqual(const char *s1, const char *s2);
+</code></pre>
+<p>Test that <code>s1</code> and <code>s2</code> are not equal (passes if <code>strcmp(s1, s2) != 0</code>).</p>
+<h2 id="special-assertions">Special assertions</h2>
+<h3 id="chaining-assertions">Chaining assertions</h3>
+<p>Chaining assertions is used to pass parameters to an existing check function. Let's say you defined a <code>rational</code> typedef and a <code>is_zero</code> function that tells if a <code>rational</code> is zero, returning a <code>bool</code>. To test if a rational <code>x</code> is zero, we could obviously use both <code>assertTrue</code> and <code>is_zero</code></p>
+<pre><code class="language-c">// Bad code
+assertTrue(is_zero(x));
+</code></pre>
+<p>This is a bad coding practice, because if the check fails we have no way to get back the value of x, and log it for example. Chained assertions were designed to solve this problem. To work with chained assertions we use two functions</p>
+<pre><code class="language-c">int assertChain(f, ...)
+int assertChainNot(f, ...)
+</code></pre>
+<p>They apply the arguments in <code>...</code> to the function <code>f</code> that returns a <code>bool</code>, providing more insights than the previous method if the test fails. The previous code would be replaced by</p>
+<pre><code class="language-c">assertChain(is_zero, x);
+</code></pre>
+<p>Chained assertions work with multiple arguments too, so checking if two <code>rational</code> numbers <code>x</code> and <code>y</code> are equal would be fairly simple using a <code>are_equal</code> function</p>
+<pre><code class="language-c">assertChain(are_equal, x, y);
+</code></pre>
+<h3 id="custom-assertions">Custom assertions</h3>
+<p>The great thing about chained assertions is that it enables us to define custom assertions. To learn more about custom assertions, go to the <code>Custom assertions</code> page.</p>
+
+            </div>
+            <div class='sidebar-right'>
+                <div class='page-nav' id='page-nav'>
+                    <p class='page-nav-header'>On this page</p>
+                    <ul>
+                        
+                        <li class='page-nav-level-1'>
+                            <a href='#assertions'>Assertions</a>
+                        </li>
+                        
+                        <li class='page-nav-level-2'>
+                            <a href='#constants'>Constants</a>
+                        </li>
+                        
+                        <li class='page-nav-level-2'>
+                            <a href='#built-in-assertions'>Built-in assertions</a>
+                        </li>
+                        
+                        <li class='page-nav-level-3'>
+                            <a href='#booleans'>Booleans</a>
+                        </li>
+                        
+                        <li class='page-nav-level-3'>
+                            <a href='#pointers'>Pointers</a>
+                        </li>
+                        
+                        <li class='page-nav-level-3'>
+                            <a href='#integers'>Integers</a>
+                        </li>
+                        
+                        <li class='page-nav-level-3'>
+                            <a href='#characters-&amp;-bytes'>Characters &amp; bytes</a>
+                        </li>
+                        
+                        <li class='page-nav-level-3'>
+                            <a href='#strings'>Strings</a>
+                        </li>
+                        
+                        <li class='page-nav-level-2'>
+                            <a href='#special-assertions'>Special assertions</a>
+                        </li>
+                        
+                        <li class='page-nav-level-3'>
+                            <a href='#chaining-assertions'>Chaining assertions</a>
+                        </li>
+                        
+                        <li class='page-nav-level-3'>
+                            <a href='#custom-assertions'>Custom assertions</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+            <div class='wave-container'>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                    <path fill-opacity="0.35"
+                        d="M0,192L60,213.3C120,235,240,277,360,277.3C480,277,600,235,720,192C840,149,960,107,1080,122.7C1200,139,1320,213,1380,250.7L1440,288L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z">
+                    </path>
+                    <path fill-opacity="0.5"
+                        d="M0,160L60,181.3C120,203,240,245,360,229.3C480,213,600,139,720,138.7C840,139,960,213,1080,229.3C1200,245,1320,203,1380,181.3L1440,160L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z">
+                    </path>
+                    <path fill-opacity="0.2"
+                        d="M0,224L60,197.3C120,171,240,117,360,117.3C480,117,600,171,720,186.7C840,203,960,181,1080,186.7C1200,192,1320,224,1380,240L1440,256L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z">
+                    </path>
+                </svg>
+                <p>Powered by <a href='https://cli.doctave.com' target='_blank'>Doctave</a></p>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/assets/katex.js?v=1739818200"></script>
+    <script type="text/javascript" src="/assets/mermaid.js?v=1739818200"></script>
+    <script type="text/javascript" src="/assets/elasticlunr.js?v=1739818200"></script>
+    <script type="text/javascript" src="/assets/prism.js?v=1739818200"></script>
+    <script type="text/javascript" src="/assets/doctave-app.js?v=1739818200"></script>
+
+    
+    <script type='text/javascript' src="/assets/livereload.js?port=35729" async="" defer=""></script>
+
+    <script>
+        // Don't reset scrolling on livereload
+        window.addEventListener('scroll', function () {
+            localStorage.setItem('doctave-scrollPosition', window.scrollY);
+
+            dragRightMenu();
+        }, false);
+
+        window.addEventListener('load', function () {
+            if (localStorage.getItem('doctave-scrollPosition') !== null)
+                window.scrollTo(0, localStorage.getItem('doctave-scrollPosition'));
+
+            document.getElementById('menu-toggle-switch').addEventListener('change', function (e) {
+                disableScrollifMenuOpen();
+            });
+        }, false);
+    </script>
+    
+</body>
+
+</html>
